@@ -1,0 +1,228 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CTABanner from '../components/CTABanner.astro';
+
+const services = [
+  {
+    id: 'bathroom',
+    title: 'Bathroom Remodeling',
+    description:
+      "We create bathrooms that blend comfort, style, and functionality, turning everyday spaces into personal retreats. Whether you're dreaming of a spa-like escape or a practical, accessible design, our expert craftsmanship and attention to detail ensure a seamless and satisfying transformation.",
+    featuresLeft: [
+      'New Bathroom Installations',
+      'Frameless Glass Installations',
+      'Standalone Tubs',
+      'Custom Tile Work',
+      'Heated Floors',
+    ],
+    featuresRight: [
+      'Handicap Accessible Curbless Showers',
+      'Tub-To-Shower Conversions',
+      'Bathroom Reconfigurations',
+      'Custom Plumbing Configurations',
+    ],
+    images: [
+      { src: 'https://randjmills.com/wp-content/uploads/2025/02/shower2-768x1024.jpg', alt: 'Frameless glass shower' },
+      { src: 'https://randjmills.com/wp-content/uploads/2025/02/bathroom-768x1024.jpg', alt: 'Bathroom renovation' },
+      { src: 'https://randjmills.com/wp-content/uploads/2025/02/shower3-768x1024.jpg', alt: 'Custom tile shower' },
+    ],
+  },
+  {
+    id: 'kitchen',
+    title: 'Kitchen Remodeling',
+    description:
+      "We transform kitchens into stunning, functional spaces designed around your lifestyle. Whether you're reimagining the layout, adding custom details, or upgrading key features, our expert team ensures a seamless process and a kitchen you'll love for years to come.",
+    featuresLeft: [
+      'Custom kitchen reconfigurations',
+      'Soffit removal',
+      'Appliance installation and removal',
+    ],
+    featuresRight: [
+      'Custom backsplashes',
+      'Custom countertops',
+      'Custom cabinets',
+    ],
+    images: [
+      { src: 'https://randjmills.com/wp-content/uploads/2025/02/kitchen-grey-1-225x300.jpg', alt: 'Grey kitchen remodel' },
+      { src: 'https://randjmills.com/wp-content/uploads/2025/02/kitchen-grey-2-225x300.jpg', alt: 'Modern kitchen' },
+      { src: 'https://randjmills.com/wp-content/uploads/2025/02/kitchen2-300x225.jpg', alt: 'Kitchen renovation' },
+    ],
+  },
+  {
+    id: 'interior',
+    title: 'Interior Solutions',
+    description:
+      "Transform your home into a space that works for your lifestyle. Whether you're opening up rooms for a modern layout, finishing your basement for extra living space, or refreshing your interiors with new finishes, we deliver high-quality craftsmanship and attention to detail.",
+    featuresLeft: [
+      'Wall removal (including load-bearing walls)',
+      'Basement Finishing',
+      'Interior & Exterior Painting',
+    ],
+    featuresRight: [
+      'Staining',
+      'Flooring installation',
+      'Interior and exterior door installation',
+    ],
+    images: [
+      { src: 'https://randjmills.com/wp-content/uploads/2025/02/basement.jpg', alt: 'Finished basement' },
+      { src: 'https://randjmills.com/wp-content/uploads/2025/02/tile-768x1024.jpg', alt: 'Custom tile flooring' },
+    ],
+  },
+  {
+    id: 'exterior',
+    title: 'Exterior Solutions',
+    description:
+      "Enhance your home's curb appeal and functionality with our expert exterior services. From creating inviting outdoor spaces to ensuring your home is protected and polished, we'll help you achieve a stunning exterior that lasts for years.",
+    featuresLeft: [
+      'Custom decks and covered porches',
+      'Fencing installation',
+      'Window installation and replacement',
+    ],
+    featuresRight: [
+      'Roof installation and repairs',
+      'Gutter installation and maintenance',
+      'Total exterior solutions',
+    ],
+    images: [
+      { src: 'https://randjmills.com/wp-content/uploads/2025/02/outdoor.jpg', alt: 'Outdoor living space' },
+      { src: 'https://randjmills.com/wp-content/uploads/2025/02/deck2-768x1024.jpg', alt: 'Custom deck build' },
+      { src: 'https://randjmills.com/wp-content/uploads/2025/02/deck4-300x225.jpg', alt: 'Deck project' },
+    ],
+  },
+];
+---
+
+<Layout
+  title="Services | R&J Mills Remodeling"
+  description="Full-service home remodeling in Louisville, KY — bathrooms, kitchens, interiors, and exteriors. Quality craftsmanship on every project."
+>
+  <Header />
+
+  <section class="page-hero">
+    <div class="container">
+      <p class="page-label">What We Do</p>
+      <h1 class="page-title">Your One-Stop Shop For All Home Remodeling Projects.</h1>
+      <p class="page-subtitle">
+        From simple updates to complete renovations, we provide expert craftsmanship and
+        full-service solutions for all your interior and exterior home improvement needs
+        throughout the Louisville, KY area.
+      </p>
+    </div>
+  </section>
+
+  {services.map((service, index) => (
+    <section
+      id={service.id}
+      class:list={['section', 'service-section', { 'service-alt': index % 2 !== 0 }]}
+    >
+      <div class:list={['container', 'service-inner', { 'service-inner--reversed': index % 2 !== 0 }]}>
+        <div class="service-content">
+          <h2 class="service-title">{service.title}</h2>
+          <p class="service-description">{service.description}</p>
+          <div class="service-features">
+            <ul>
+              {service.featuresLeft.map(f => <li>{f}</li>)}
+            </ul>
+            <ul>
+              {service.featuresRight.map(f => <li>{f}</li>)}
+            </ul>
+          </div>
+          <a href="/contact" class="btn btn-primary">Get Free Quote</a>
+        </div>
+        <div class="service-images">
+          {service.images.map(img => (
+            <img src={img.src} alt={img.alt} loading="lazy" />
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <CTABanner />
+  <Footer />
+</Layout>
+
+<style>
+  .page-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    max-width: 680px;
+    margin: 16px 0 0;
+    line-height: 1.75;
+  }
+
+  .service-section { background: var(--color-bg); }
+  .service-alt { background: var(--color-bg-light); }
+
+  .service-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .service-inner--reversed .service-content { order: 2; }
+  .service-inner--reversed .service-images { order: 1; }
+
+  .service-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin: 0 0 16px;
+    letter-spacing: 0.02em;
+  }
+  .service-description {
+    color: var(--color-text-light);
+    line-height: 1.85;
+    margin: 0 0 28px;
+    font-size: 1.025rem;
+  }
+
+  .service-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+    margin-bottom: 32px;
+  }
+  .service-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .service-features li {
+    padding: 7px 0 7px 18px;
+    position: relative;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .service-features li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: bold;
+  }
+
+  .service-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  .service-images img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 900px) {
+    .service-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .service-inner--reversed .service-content { order: 0; }
+    .service-inner--reversed .service-images { order: 0; }
+  }
+</style>

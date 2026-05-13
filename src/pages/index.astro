@@ -1,0 +1,231 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CTABanner from '../components/CTABanner.astro';
+
+const services = [
+  {
+    href: '/services#bathroom',
+    title: 'Bathroom Remodeling',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6a2 2 0 1 1 4 0v8"/><rect x="2" y="14" width="20" height="4" rx="1"/><path d="M5 18v2m14-2v2"/></svg>`,
+  },
+  {
+    href: '/services#kitchen',
+    title: 'Kitchen Remodeling',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v20M18 2v4a4 4 0 0 1-4 4H6"/><rect x="2" y="10" width="20" height="12" rx="2"/></svg>`,
+  },
+  {
+    href: '/services#interior',
+    title: 'Interior Solutions',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  },
+  {
+    href: '/services#exterior',
+    title: 'Exterior Solutions',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`,
+  },
+];
+---
+
+<Layout title="R&J Mills Remodeling | Louisville, KY Home Remodeling">
+  <Header />
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <p class="hero-location">Located in Louisville, KY</p>
+      <h1 class="hero-title">Building the Future,<br />Restoring the Past.</h1>
+      <a href="/contact" class="btn btn-primary">Get Free Quote</a>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="section intro-section">
+    <div class="container intro-inner">
+      <div class="intro-text">
+        <p class="section-label">Who We Are</p>
+        <h2 class="section-title">Transforming Houses Into Dream Homes</h2>
+        <p>
+          At R&amp;J Mills Remodeling, we specialize in transforming houses into dream homes.
+          With years of experience and a passion for craftsmanship, we provide high-quality
+          indoor and outdoor remodeling services that enhance both style and functionality.
+          Whether you're updating your kitchen, revitalizing your bathroom, or upgrading
+          your home's exterior, our team is dedicated to bringing your vision to life with
+          precision and care.
+        </p>
+      </div>
+      <div class="intro-images">
+        <img
+          src="https://randjmills.com/wp-content/uploads/2025/02/pexels-itsterrymag-2635038-2048x1367.jpg"
+          alt="Beautiful kitchen remodel by R&J Mills"
+          loading="eager"
+        />
+        <img
+          src="https://randjmills.com/wp-content/uploads/2025/02/pexels-pixabay-259962-2048x1360.jpg"
+          alt="Elegant living room renovation"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Complete Solutions -->
+  <section class="section solutions-section">
+    <div class="container solutions-inner">
+      <div class="solutions-text">
+        <p class="section-label">Complete Solutions</p>
+        <h2 class="section-title">Your One-Stop Shop For Everything Home.</h2>
+        <p>
+          From sleek modern designs to timeless classics, we offer a wide range of home
+          remodeling services to transform your living spaces into areas you'll love to
+          spend time in.
+        </p>
+        <p>
+          Whether you have a clear vision for your dream home or need inspiration from our
+          talented designers, we are here to bring your ideas to life. From luxurious
+          bathroom retreats and stunning kitchen renovations to functional basement finishes
+          and beautiful outdoor upgrades, we ensure every detail is crafted with precision
+          and care.
+        </p>
+        <a href="/services" class="btn btn-primary">View Services</a>
+      </div>
+      <div class="solutions-cards">
+        {services.map(service => (
+          <a href={service.href} class="service-card">
+            <div class="service-card-icon" set:html={service.icon} />
+            <h3>{service.title}</h3>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    background: url('https://randjmills.com/wp-content/uploads/2025/02/pexels-pixabay-259962-2048x1360.jpg')
+      center / cover no-repeat;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(12, 22, 36, 0.68);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+  }
+  .hero-location {
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0 0 16px;
+  }
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 0 40px;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+  }
+
+  /* Intro */
+  .intro-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .intro-text p {
+    color: var(--color-text-light);
+    line-height: 1.85;
+    margin: 0;
+    font-size: 1.025rem;
+  }
+  .intro-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .intro-images img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+  }
+
+  /* Solutions */
+  .solutions-section { background: var(--color-bg-light); }
+  .solutions-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .solutions-text p {
+    color: var(--color-text-light);
+    line-height: 1.85;
+    margin: 0 0 16px;
+    font-size: 1.025rem;
+  }
+  .solutions-text .btn { margin-top: 8px; }
+
+  .solutions-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .service-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    padding: 32px 20px;
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    color: var(--color-text);
+  }
+  .service-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+  .service-card-icon { color: var(--color-accent); }
+  .service-card h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0;
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 900px) {
+    .intro-inner,
+    .solutions-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+  @media (max-width: 600px) {
+    .hero { min-height: 80vh; }
+    .intro-images { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CTABanner from '../components/CTABanner.astro';
+
+const galleryImages = [
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/basement.jpg', alt: 'Finished basement remodel' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/kitchen-2-300x225.jpg', alt: 'Kitchen remodel' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/kitchen2-300x225.jpg', alt: 'Kitchen renovation' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/shower3-768x1024.jpg', alt: 'Custom shower' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/deck3-225x300.jpg', alt: 'Deck construction' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/shower-4-225x300.jpg', alt: 'Shower renovation' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/shwoer-225x300.jpg', alt: 'Custom shower tile' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/kitchen-grey-2-768x1024.jpg', alt: 'Modern grey kitchen' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/tile-768x1024.jpg', alt: 'Custom tile work' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/kitchen-300x225.jpg', alt: 'Kitchen renovation' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/bathroom-768x1024.jpg', alt: 'Bathroom remodel' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/deck4-300x225.jpg', alt: 'Deck project' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/shower-3-225x300.jpg', alt: 'Shower renovation' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/deck-2-300x225.jpg', alt: 'Outdoor deck' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/kitchen-grey-3-768x1024.jpg', alt: 'Grey kitchen remodel' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/shower-768x1024.jpg', alt: 'Luxury shower' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/shower2-768x1024.jpg', alt: 'Frameless glass shower' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/deck2-768x1024.jpg', alt: 'Custom deck build' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/shower-2-225x300.jpg', alt: 'Shower remodel' },
+  { src: 'https://randjmills.com/wp-content/uploads/2025/02/deck-grey-225x300.jpg', alt: 'Grey deck' },
+];
+---
+
+<Layout
+  title="About | R&J Mills Remodeling"
+  description="Learn about R&J Mills Remodeling — Louisville, KY's trusted home remodeling experts with years of experience delivering top-quality craftsmanship."
+>
+  <Header />
+
+  <section class="page-hero">
+    <div class="container">
+      <p class="page-label">About Us</p>
+      <h1 class="page-title">Transforming Homes, Enhancing Lives.</h1>
+    </div>
+  </section>
+
+  <section class="section about-section">
+    <div class="container about-inner">
+      <div class="about-text">
+        <p>
+          Your home should reflect your style, comfort, and functionality. As a trusted
+          home remodeling company serving Louisville, KY, and surrounding areas, we specialize
+          in creating beautifully crafted spaces tailored to our clients' unique needs.
+        </p>
+        <p>
+          With years of experience in the industry, our team is committed to delivering
+          top-quality craftsmanship, whether it's a complete bathroom renovation, a kitchen
+          makeover, or an outdoor transformation. We take pride in attention to detail,
+          expert design solutions, and seamless project execution — ensuring that every
+          project exceeds expectations.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section gallery-section">
+    <div class="container">
+      <h2 class="section-title gallery-heading">Our Work</h2>
+      <div class="gallery">
+        {galleryImages.map(img => (
+          <div class="gallery-item">
+            <img src={img.src} alt={img.alt} loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABanner />
+  <Footer />
+</Layout>
+
+<style>
+  .about-section { background: var(--color-bg-light); }
+
+  .about-inner { max-width: 820px; }
+
+  .about-text p {
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: var(--color-text-light);
+    margin: 0 0 20px;
+  }
+  .about-text p:last-child { margin-bottom: 0; }
+
+  .gallery-section { background: var(--color-bg); }
+
+  .gallery-heading {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .gallery {
+    columns: 3;
+    column-gap: 14px;
+  }
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.02); }
+
+  @media (max-width: 900px) {
+    .gallery { columns: 2; }
+  }
+  @media (max-width: 600px) {
+    .gallery { columns: 1; }
+  }
+</style>
