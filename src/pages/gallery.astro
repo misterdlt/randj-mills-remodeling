@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro'; import Header from '../components/Header.astro'; import Footer from '../components/Footer.astro'; import CTABanner from '../components/CTABanner.astro'; import ProjectGallery from '../components/ProjectGallery.astro';
+---
+<Layout title="Remodeling Project Gallery | Louisville, KY | R&J Mills" description="See kitchen, bathroom, interior, and exterior remodeling projects completed by R&J Mills Remodeling in the Louisville, Kentucky area.">
+  <Header /><main id="main-content">
+    <section class="page-hero"><div class="container"><p class="page-label">Built here in Louisville</p><h1 class="page-title">Recent remodeling projects</h1><p class="page-subtitle">Real spaces, thoughtful details, and craftsmanship designed for everyday life.</p></div></section>
+    <section class="section" data-reveal><div class="container"><ProjectGallery /></div></section>
+    <CTABanner />
+  </main><Footer />
+</Layout>
+<style>.page-subtitle{color:rgba(255,255,255,.7);max-width:650px;font-size:1.05rem;margin:22px 0 0}</style>

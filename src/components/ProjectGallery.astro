@@ -1,0 +1,52 @@
+---
+import { projects } from '../data/projects';
+interface Props { limit?: number; }
+const { limit } = Astro.props;
+const uploadedFiles = import.meta.glob<string>('../assets/gallery/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' });
+const uploads = Object.entries(uploadedFiles).map(([path, src]) => {
+  const filename = path.split('/').pop()?.replace(/\.[^.]+$/, '') ?? 'R&J Mills remodeling project';
+  const label = filename.replace(/[-_]+/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase());
+  return { src, alt: `${label} by R&J Mills Remodeling`, category: 'New Projects' };
+});
+const allProjects = [...uploads, ...projects];
+const visibleProjects = limit ? allProjects.slice(0, limit) : allProjects;
+const categories = ['All', ...new Set(allProjects.map(item => item.category))];
+---
+<div class="gallery-controls" aria-label="Filter projects">
+  {categories.map((category, index) => <button type="button" class:list={['filter', { active: index === 0 }]} data-filter={category}>{category}</button>)}
+</div>
+<div class="project-grid">
+  {visibleProjects.map((project, index) => (
+    <button class="project" type="button" data-category={project.category} data-index={index} aria-label={`View larger image: ${project.alt}`}>
+      <img src={project.src} alt={project.alt} width="768" height="1024" loading={index < 3 ? 'eager' : 'lazy'} decoding="async" />
+      <span class="project-meta"><span>{project.category}</span><strong>View project</strong></span>
+    </button>
+  ))}
+</div>
+<dialog class="lightbox" aria-label="Project photo viewer">
+  <button class="lightbox-close" type="button" aria-label="Close photo viewer">×</button>
+  <img src="" alt="" />
+</dialog>
+<script>
+  document.querySelectorAll('.gallery-controls').forEach((controls) => {
+    const gallery = controls.nextElementSibling;
+    controls.querySelectorAll<HTMLButtonElement>('.filter').forEach((button) => button.addEventListener('click', () => {
+      controls.querySelector('.active')?.classList.remove('active'); button.classList.add('active');
+      gallery?.querySelectorAll<HTMLElement>('.project').forEach((item) => item.hidden = button.dataset.filter !== 'All' && item.dataset.category !== button.dataset.filter);
+    }));
+  });
+  document.querySelectorAll<HTMLDialogElement>('.lightbox').forEach((dialog) => {
+    const grid = dialog.previousElementSibling; const image = dialog.querySelector('img');
+    grid?.querySelectorAll<HTMLButtonElement>('.project').forEach((item) => item.addEventListener('click', () => {
+      const source = item.querySelector('img'); if (image && source) { image.src = source.src; image.alt = source.alt; dialog.showModal(); }
+    }));
+    dialog.querySelector('.lightbox-close')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  });
+</script>
+<style>
+  .gallery-controls{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:36px}.filter{border:1px solid var(--border);background:#fff;padding:10px 16px;font:700 .7rem var(--font-body);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.filter:hover,.filter.active{background:var(--black);border-color:var(--black);color:#fff}
+  .project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.project{position:relative;border:0;padding:0;background:#ddd;overflow:hidden;cursor:zoom-in;aspect-ratio:4/5;text-align:left}.project:nth-child(4n+1){grid-row:span 2;aspect-ratio:auto}.project img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}.project:hover img{transform:scale(1.035)}.project-meta{position:absolute;inset:auto 0 0;display:flex;justify-content:space-between;align-items:end;padding:44px 18px 16px;background:linear-gradient(transparent,rgba(0,0,0,.82));color:#fff;transform:translateY(8px);opacity:0;transition:.3s}.project:hover .project-meta,.project:focus-visible .project-meta{opacity:1;transform:none}.project-meta span{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}.project-meta strong{font-family:var(--font-heading);text-transform:uppercase}
+  .lightbox{width:min(94vw,1000px);height:min(90vh,800px);padding:0;border:0;background:transparent;overflow:visible}.lightbox::backdrop{background:rgba(0,0,0,.92)}.lightbox img{width:100%;height:100%;object-fit:contain}.lightbox-close{position:absolute;right:0;top:-48px;color:#fff;background:none;border:0;font-size:2.2rem;cursor:pointer}
+  [hidden]{display:none!important}@media(max-width:800px){.project-grid{grid-template-columns:repeat(2,1fr)}.project:nth-child(4n+1){grid-row:auto;aspect-ratio:4/5}}@media(max-width:520px){.project-grid{grid-template-columns:1fr}.project{aspect-ratio:4/3}.project-meta{opacity:1;transform:none}}
+</style>

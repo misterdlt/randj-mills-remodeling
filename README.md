@@ -1,46 +1,32 @@
-# Astro Starter Kit: Basics
+# R&J Mills Remodeling website
 
-```sh
-npm create astro@latest -- --template basics
-```
+Astro site for `randjmills.com`.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Deploy to GitHub Pages
 
-## 🚀 Project Structure
+The workflow in `.github/workflows/deploy.yml` builds and publishes the site whenever the `master` branch is pushed.
 
-Inside of your Astro project, you'll see the following folders and files:
+1. Push the repository to GitHub.
+2. Open **Settings → Pages** in the GitHub repository.
+3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+4. Open the **Actions** tab and wait for “Deploy to GitHub Pages” to complete.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+The production address is `https://randjmills.com`. The workflow builds at the domain root and includes the GitHub Pages `CNAME` file.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+In GitHub, open **Settings → Pages**, enter `randjmills.com` under **Custom domain**, save it, and enable **Enforce HTTPS** once the certificate is ready.
 
-## 🧞 Commands
+## Add project photos
 
-All commands are run from the root of the project, from a terminal:
+1. Copy `.jpg`, `.jpeg`, `.png`, `.webp`, or `.avif` files into `src/assets/gallery/`.
+2. Give each image a descriptive filename, such as `st-matthews-blue-kitchen.webp`. The filename automatically becomes accessible image text.
+3. Run `npm run build`. New photos appear first in the Projects gallery under **New Projects**.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+For best performance, export images as WebP at roughly 1600–2000 pixels on the longest side. Keep original project photos backed up elsewhere.
 
-## 👀 Want to learn more?
+Facebook does not provide a dependable public photo feed without an app, access token, and periodic maintenance. Keeping the gallery photos in this folder makes them fast, crawlable, and owned by the business. The site links to the Facebook page for visitors who want social updates.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Commands
+
+- `npm run dev` — local development server
+- `npm run build` — production build in `dist/`
+- `npm run preview` — preview the production build

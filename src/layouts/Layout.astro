@@ -1,136 +1,56 @@
 ---
-interface Props {
-  title?: string;
-  description?: string;
-}
-
-const {
-  title = "R&J Mills Remodeling | Louisville, KY",
-  description = "R&J Mills Remodeling — Expert home remodeling services in Louisville, KY. Bathrooms, kitchens, interiors, and exteriors.",
-} = Astro.props;
+interface Props { title?: string; description?: string; image?: string; schema?: Record<string, unknown> | Record<string, unknown>[]; }
+import { pageUrl } from '../utils/paths';
+const siteUrl = Astro.site?.href.replace(/\/$/, '') ?? 'https://randjmills.com';
+const publicRoot = new URL(pageUrl(), `${siteUrl}/`).href.replace(/\/$/, '');
+const { title = 'R&J Mills Remodeling | Louisville, KY', description = 'Louisville home remodeling for kitchens, bathrooms, interiors, decks, and exteriors. Talk with R&J Mills Remodeling about your project.', image = 'https://randjmills.com/wp-content/uploads/2025/02/pexels-itsterrymag-2635038-2048x1367.jpg', schema = [] } = Astro.props;
+const canonical = new URL(pageUrl(Astro.url.pathname.replace(import.meta.env.BASE_URL, '')), `${siteUrl}/`);
+const socialImage = new URL(image, siteUrl);
+const schemas = Array.isArray(schema) ? schema : [schema];
+const localBusiness = {
+  '@context': 'https://schema.org', '@type': ['GeneralContractor', 'HomeAndConstructionBusiness'], '@id': `${publicRoot}/#business`,
+  name: 'R&J Mills Remodeling', url: publicRoot, telephone: '+1-502-649-6975', email: 'John.mills031790@gmail.com',
+  image: socialImage.href, logo: `${publicRoot}/favicon.svg`, slogan: 'Building the Future, Restoring the Past.',
+  description: 'Home remodeling contractor serving Louisville, Kentucky and nearby communities.',
+  address: { '@type': 'PostalAddress', addressLocality: 'Louisville', addressRegion: 'KY', addressCountry: 'US' },
+  areaServed: ['Louisville', 'St. Matthews', 'Crescent Hill', 'Jeffersontown', 'Fern Creek', 'The Highlands'].map(name => ({ '@type': 'Place', name })),
+  sameAs: ['https://www.facebook.com/RJMillsRemodeling/'], priceRange: '$$',
+};
 ---
-
 <!doctype html>
-<html lang="en">
+<html lang="en-US">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="description" content={description} />
-    <meta name="generator" content={Astro.generator} />
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111111" /><meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" /><link rel="canonical" href={canonical} />
+    <link rel="icon" href={pageUrl('favicon.ico')} sizes="any" /><link rel="icon" href={pageUrl('favicon.svg')} type="image/svg+xml" />
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <meta property="og:type" content="website" /><meta property="og:locale" content="en_US" /><meta property="og:site_name" content="R&J Mills Remodeling" />
+    <meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:url" content={canonical} /><meta property="og:image" content={socialImage} /><meta property="og:image:alt" content="A remodeled home interior by R&J Mills Remodeling" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
+    <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+    {schemas.map(item => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
   </head>
   <body>
-    <slot />
+    <a class="skip-link" href="#main-content">Skip to content</a><slot />
+    <script is:inline>
+      const observer = new IntersectionObserver((entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add('is-visible')), { threshold: .12 });
+      document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+    </script>
   </body>
 </html>
-
 <style is:global>
   *, *::before, *::after { box-sizing: border-box; }
-
-  :root {
-    --color-primary: #1c2b3a;
-    --color-accent: #c8951a;
-    --color-accent-hover: #a87918;
-    --color-text: #333333;
-    --color-text-light: #666666;
-    --color-bg: #ffffff;
-    --color-bg-light: #f7f7f7;
-    --color-border: #e0e0e0;
-    --font-heading: 'Montserrat', sans-serif;
-    --font-body: 'Open Sans', sans-serif;
-    --max-width: 1200px;
-  }
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    font-family: var(--font-body);
-    color: var(--color-text);
-    background: var(--color-bg);
-    line-height: 1.6;
-  }
-
-  h1, h2, h3, h4 { font-family: var(--font-heading); line-height: 1.2; margin-top: 0; }
-  a { color: inherit; text-decoration: none; }
-  img { max-width: 100%; height: auto; display: block; }
-
-  .container {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  .btn {
-    display: inline-block;
-    padding: 14px 32px;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-  .btn-primary { background: var(--color-accent); color: #fff; }
-  .btn-primary:hover { background: var(--color-accent-hover); }
-  .btn-outline { background: transparent; color: #fff; border: 2px solid #fff; }
-  .btn-outline:hover { background: #fff; color: var(--color-primary); }
-
-  .section { padding: 80px 0; }
-
-  .section-label {
-    font-family: var(--font-heading);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-bottom: 12px;
-    margin-top: 0;
-  }
-
-  .section-title {
-    font-size: 2.25rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: var(--color-primary);
-    margin-bottom: 20px;
-    letter-spacing: 0.02em;
-  }
-
-  .page-hero {
-    background: var(--color-primary);
-    padding: 72px 0 64px;
-  }
-  .page-label {
-    font-family: var(--font-heading);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin: 0 0 12px;
-  }
-  .page-title {
-    font-size: clamp(1.75rem, 4vw, 2.75rem);
-    font-weight: 800;
-    text-transform: uppercase;
-    color: #fff;
-    margin: 0;
-    max-width: 700px;
-    letter-spacing: 0.02em;
-  }
-
-  @media (max-width: 768px) {
-    .section { padding: 60px 0; }
-    .section-title { font-size: 1.75rem; }
-  }
+  :root { --black:#111; --black-soft:#1b1b1b; --orange:#f26522; --orange-dark:#cf4b0d; --white:#fff; --paper:#f5f4f1; --text:#292929; --muted:#686868; --border:#dedcd6; --color-primary:var(--black); --color-accent:var(--orange); --color-accent-hover:var(--orange-dark); --color-text:var(--text); --color-text-light:var(--muted); --color-bg:var(--white); --color-bg-light:var(--paper); --color-border:var(--border); --font-heading:'Oswald',sans-serif; --font-body:'Manrope',sans-serif; --max-width:1200px; }
+  html { scroll-behavior:smooth; } body { margin:0; font-family:var(--font-body); color:var(--text); background:var(--white); line-height:1.65; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4 { font-family:var(--font-heading); line-height:1.08; margin-top:0; text-wrap:balance; } a { color:inherit; text-decoration:none; } img { max-width:100%; height:auto; display:block; } :focus-visible { outline:3px solid var(--orange); outline-offset:4px; }
+  .skip-link { position:fixed; z-index:1000; left:16px; top:-80px; background:var(--orange); color:#fff; padding:12px 18px; font-weight:700; transition:top .2s; }.skip-link:focus{top:16px}
+  .container { width:min(calc(100% - 40px),var(--max-width)); margin-inline:auto; }.section{padding:clamp(72px,9vw,120px) 0}
+  .btn { display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:14px 26px; font-family:var(--font-body); font-weight:800; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; border:2px solid transparent; cursor:pointer; transition:transform .25s,background .25s,color .25s,box-shadow .25s }.btn:hover{transform:translateY(-2px)}.btn-primary{background:var(--orange);color:#fff;box-shadow:0 10px 28px rgba(242,101,34,.22)}.btn-primary:hover{background:var(--orange-dark)}.btn-outline{border-color:rgba(255,255,255,.7);color:#fff}.btn-outline:hover{background:#fff;color:var(--black)}
+  .section-label,.page-label{font:700 .72rem/1 var(--font-body);letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin:0 0 16px}.section-title{font-size:clamp(2.25rem,5vw,4rem);text-transform:uppercase;color:var(--black);margin:0 0 24px;letter-spacing:-.02em}
+  .page-hero{background:var(--black);padding:clamp(76px,10vw,128px) 0;position:relative;overflow:hidden}.page-hero::after{content:'';position:absolute;width:420px;height:420px;right:-140px;top:-240px;border:70px solid rgba(242,101,34,.14);border-radius:50%}.page-title{font-size:clamp(2.7rem,7vw,5.4rem);text-transform:uppercase;color:#fff;margin:0;max-width:900px;letter-spacing:-.025em}
+  [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}[data-reveal].is-visible{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}[data-reveal]{opacity:1;transform:none}}@media(max-width:600px){.container{width:min(calc(100% - 28px),var(--max-width))}}
 </style>

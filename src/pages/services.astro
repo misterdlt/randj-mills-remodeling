@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import CTABanner from '../components/CTABanner.astro';
+import { pageUrl } from '../utils/paths';
 
 const services = [
   {
@@ -95,10 +96,11 @@ const services = [
 ---
 
 <Layout
-  title="Services | R&J Mills Remodeling"
+  title="Home Remodeling Services in Louisville, KY | R&J Mills"
   description="Full-service home remodeling in Louisville, KY — bathrooms, kitchens, interiors, and exteriors. Quality craftsmanship on every project."
 >
   <Header />
+  <main id="main-content">
 
   <section class="page-hero">
     <div class="container">
@@ -129,7 +131,7 @@ const services = [
               {service.featuresRight.map(f => <li>{f}</li>)}
             </ul>
           </div>
-          <a href="/contact" class="btn btn-primary">Get Free Quote</a>
+          <a href={pageUrl('contact')} class="btn btn-primary">Get Free Quote</a>
         </div>
         <div class="service-images">
           {service.images.map(img => (
@@ -141,6 +143,7 @@ const services = [
   ))}
 
   <CTABanner />
+  </main>
   <Footer />
 </Layout>
 
