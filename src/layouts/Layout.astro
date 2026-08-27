@@ -3,7 +3,7 @@ interface Props { title?: string; description?: string; image?: string; schema?:
 import { pageUrl } from '../utils/paths';
 const siteUrl = Astro.site?.href.replace(/\/$/, '') ?? 'https://randjmills.com';
 const publicRoot = new URL(pageUrl(), `${siteUrl}/`).href.replace(/\/$/, '');
-const { title = 'R&J Mills Remodeling | Louisville, KY', description = 'Louisville home remodeling for kitchens, bathrooms, interiors, decks, and exteriors. Talk with R&J Mills Remodeling about your project.', image = 'https://randjmills.com/wp-content/uploads/2025/02/pexels-itsterrymag-2635038-2048x1367.jpg', schema = [] } = Astro.props;
+const { title = 'R&J Mills Remodeling | Louisville, KY', description = 'Louisville home remodeling for kitchens, bathrooms, interiors, decks, and exteriors. Talk with R&J Mills Remodeling about your project.', image = pageUrl('images/kitchen-hero.jpg'), schema = [] } = Astro.props;
 const canonical = new URL(pageUrl(Astro.url.pathname.replace(import.meta.env.BASE_URL, '')), `${siteUrl}/`);
 const socialImage = new URL(image, siteUrl);
 const schemas = Array.isArray(schema) ? schema : [schema];
