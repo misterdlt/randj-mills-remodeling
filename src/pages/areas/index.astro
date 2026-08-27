@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { serviceAreas } from '../../data/areas';
+import { pageUrl } from '../../utils/paths';
+---
+<Layout title="Louisville Remodeling Service Areas | R&J Mills" description="Explore the Louisville, KY communities served by R&J Mills Remodeling for kitchen, bathroom, interior, deck, porch, and exterior projects.">
+  <Header /><main id="main-content">
+    <section class="page-hero"><div class="container"><p class="page-label">Areas we serve</p><h1 class="page-title">Local remodeling across Louisville.</h1><p class="page-subtitle">R&amp;J Mills Remodeling serves homeowners throughout Louisville and nearby communities with complete interior and exterior remodeling.</p></div></section>
+    <section class="section"><div class="container"><div class="area-grid">
+      {serviceAreas.map((area, index) => <a class="area-card" href={pageUrl(`areas/${area.slug}`)} data-reveal><span>{String(index + 1).padStart(2, '0')}</span><h2>{area.name}, KY</h2><p>{area.lead}</p><strong>Explore local services →</strong></a>)}
+    </div></div></section>
+    <section class="section service-summary"><div class="container summary-grid" data-reveal><div><p class="section-label">One remodeling partner</p><h2 class="section-title">Interior and exterior solutions.</h2></div><div><p>Our service area pages make it easier to find relevant information for your community, but our core approach stays consistent: listen carefully, define the work clearly, and build with close attention to detail.</p><a class="btn btn-primary" href={pageUrl('services')}>View all services</a></div></div></section>
+    <CTABanner />
+  </main><Footer />
+</Layout>
+<style>
+  .page-subtitle{color:rgba(255,255,255,.72);max-width:680px;font-size:1.05rem;margin:22px 0 0}.area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.area-card{border:1px solid var(--border);padding:34px;min-height:300px;display:flex;flex-direction:column;transition:.25s}.area-card:hover{border-color:var(--orange);transform:translateY(-4px);box-shadow:0 18px 45px rgba(0,0,0,.08)}.area-card span{font-size:.7rem;color:var(--orange);letter-spacing:.14em}.area-card h2{font-size:2rem;text-transform:uppercase;margin:34px 0 18px}.area-card p{color:var(--muted);margin:0 0 24px}.area-card strong{margin-top:auto;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}.service-summary{background:var(--paper)}.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px}.summary-grid p{font-size:1.08rem;color:var(--muted);margin-top:0}.summary-grid .btn{margin-top:16px}@media(max-width:850px){.area-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.area-grid,.summary-grid{grid-template-columns:1fr}.summary-grid{gap:25px}}
+</style>

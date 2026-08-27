@@ -4,6 +4,7 @@ const navLinks = [
   { href: pageUrl(), label: 'Home' },
   { href: pageUrl('about'), label: 'About' },
   { href: pageUrl('services'), label: 'Services' },
+  { href: pageUrl('areas'), label: 'Areas' },
   { href: pageUrl('gallery'), label: 'Projects' },
   { href: pageUrl('contact'), label: 'Contact' },
 ];
@@ -167,7 +168,7 @@ const currentPath = Astro.url.pathname;
     transition: all 0.25s;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .header-inner {
       height: 60px;
       position: relative;

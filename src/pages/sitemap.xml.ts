@@ -1,7 +1,8 @@
 import type { APIRoute } from 'astro';
 import { pageUrl } from '../utils/paths';
+import { serviceAreas } from '../data/areas';
 
-const pages = ['', 'services', 'gallery', 'about', 'contact'];
+const pages = ['', 'services', 'gallery', 'about', 'contact', 'areas', ...serviceAreas.map(area => `areas/${area.slug}`)];
 
 export const GET: APIRoute = ({ site }) => {
   const urls = pages.map(path => `  <url><loc>${new URL(pageUrl(path), site).href}</loc></url>`).join('\n');

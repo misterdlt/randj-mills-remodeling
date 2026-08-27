@@ -17,6 +17,7 @@ import { pageUrl } from '../utils/paths';
         <li><a href={pageUrl()}>Home</a></li>
         <li><a href={pageUrl('about')}>About</a></li>
         <li><a href={pageUrl('services')}>Services</a></li>
+        <li><a href={pageUrl('areas')}>Areas We Serve</a></li>
         <li><a href={pageUrl('gallery')}>Projects</a></li>
         <li><a href={pageUrl('contact')}>Contact</a></li>
       </ul>
@@ -42,6 +43,16 @@ import { pageUrl } from '../utils/paths';
         Facebook
       </a>
     </div>
+  </div>
+
+  <div class="container service-area-links" aria-label="Remodeling service areas">
+    <span>Service Areas</span>
+    <a href={pageUrl('areas/louisville-ky')}>Louisville</a>
+    <a href={pageUrl('areas/st-matthews-ky')}>St. Matthews</a>
+    <a href={pageUrl('areas/crescent-hill-ky')}>Crescent Hill</a>
+    <a href={pageUrl('areas/jeffersontown-ky')}>Jeffersontown</a>
+    <a href={pageUrl('areas/fern-creek-ky')}>Fern Creek</a>
+    <a href={pageUrl('areas/highlands-ky')}>The Highlands</a>
   </div>
 
   <div class="footer-bottom">
@@ -133,6 +144,10 @@ import { pageUrl } from '../utils/paths';
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.35);
   }
+  .service-area-links { display:flex; justify-content:center; gap:10px 22px; flex-wrap:wrap; padding:22px 20px; border-bottom:1px solid rgba(255,255,255,.1); font-size:.73rem; }
+  .service-area-links span { color:var(--orange); font-weight:800; text-transform:uppercase; letter-spacing:.1em; }
+  .service-area-links a { color:rgba(255,255,255,.55); }
+  .service-area-links a:hover { color:#fff; }
   .footer-bottom p { margin: 0; }
 
   @media (max-width: 768px) {
